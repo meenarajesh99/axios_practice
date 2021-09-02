@@ -2,7 +2,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
+import axios, { CancelTokenSource } from "axios";
+
 
 interface IPost {
   id: number;
@@ -11,17 +12,22 @@ interface IPost {
   body: string;
 }
 
-const defaultPosts:IPost[] = [];
-const App = () => {}
+const defaultPosts: IPost[] = [];
 
-const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
-const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(true);
-const [error, setError]: [string, (error: string) => void] = React.useState("");
 
-const cancelToken = axios.CancelToken; //create cancel token
+
+const App = () => {
+
+  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
+  const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(true);
+  const [error, setError]: [string, (error: string) => void] = React.useState("");
+
+  const cancelToken = axios.CancelToken; //create cancel token
   const [cancelTokenSource, setCancelTokenSource]: [CancelTokenSource,
     (cancelTokenSource: CancelTokenSource) => void
   ] = React.useState(cancelToken.source());
+
+
   const handleCancelClick = () => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel("User cancelled operation");
@@ -71,6 +77,8 @@ const cancelToken = axios.CancelToken; //create cancel token
 };
 
 
+export default App;
+
 
 /* function App() {
   return (
@@ -95,4 +103,4 @@ const cancelToken = axios.CancelToken; //create cancel token
 
 
 
-export default App;
+
